@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SensorMind AI Dashboard</title>
+    <style>
+        body { background-color: #090d16; color: #f3f4f6; font-family: system-ui, sans-serif; padding: 40px 20px; display: flex; justify-content: center; }
+        .wrapper { width: 100%; max-width: 700px; }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: #f43f5e; margin: 0; font-size: 2.2rem; }
+        header p { color: #9ca3af; margin-top: 5px; }
+        .control-panel { background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-box { display: flex; flex-direction: column; }
+        label { font-size: 0.85rem; color: #9ca3af; margin-bottom: 8px; font-weight: 500; }
+        input { background-color: #090d16; border: 1px solid #374151; color: white; padding: 12px; border-radius: 6px; font-size: 1rem; outline: none; }
+        input:focus { border-color: #f43f5e; }
+        .submit-btn { width: 100%; background-color: #f43f5e; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 1rem; font-weight: bold; margin-top: 25px; cursor: pointer; transition: 0.2s; }
+        .submit-btn:hover { background-color: #e11d48; }
+        .banner { margin-top: 35px; padding: 18px; border-radius: 8px; text-align: center; font-weight: 700; letter-spacing: 0.02em; }
+        .success-alert { background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; color: #10b981; }
+        .danger-alert { background: rgba(244, 63, 94, 0.1); border: 1px solid #f43f5e; color: #f43f5e; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>⚙️ SensorMind AI</h1>
+            <p>Predictive Operations Analytics & Intelligent Anomaly Classification Dashboard</p>
+        </header>
+        <main class="control-panel">
+            <form action="/predict" method="POST" class="form-grid">
+                <div class="input-box"><label>Air Temperature (Kelvin)</label><input type="number" step="0.1" name="air_temp" required placeholder="e.g. 298.1"></div>
+                <div class="input-box"><label>Process Temperature (Kelvin)</label><input type="number" step="0.1" name="proc_temp" required placeholder="e.g. 308.6"></div>
+                <div class="input-box"><label>Rotational Speed (RPM)</label><input type="number" name="speed" required placeholder="e.g. 1500"></div>
+                <div class="input-box"><label>Torque Load Force (Nm)</label><input type="number" step="0.1" name="torque" required placeholder="e.g. 40.5"></div>
+                <div class="input-box" style="grid-column: span 2;"><label>Accumulated Tool Wear Time (Minutes)</label><input type="number" name="wear" required placeholder="e.g. 120"></div>
+                <button type="submit" class="submit-btn" style="grid-column: span 2;">Evaluate Telemetry Diagnostic Signatures</button>
+            </form>
+            {% if prediction_text %}
+                <div class="banner {{ alert_style }}"><h2>{{ prediction_text }}</h2></div>
+            {% endif %}
+        </main>
+    </div>
+</body>
+</html>
